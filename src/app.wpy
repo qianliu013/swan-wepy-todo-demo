@@ -1,11 +1,19 @@
 <style lang="less">
-.container {
+// .container {
+//   height: 100%;
+//   display: flex;
+//   flex-direction: column;
+//   align-items: center;
+//   justify-content: space-between;
+//   box-sizing: border-box;
+// }
+
+html,
+body {
+  background-color: #f7f7f7;
+  font-size: 15px;
+  font-family: -apple-system-font, Helvetica Neue, Helvetica, sans-serif;
   height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  box-sizing: border-box;
 }
 </style>
 
@@ -17,6 +25,7 @@ import 'wepy-async-function'
 export default class extends wepy.app {
   config = {
     pages: [
+      'pages/final-res',
       'pages/index'
     ],
     window: {

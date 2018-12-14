@@ -1,0 +1,99 @@
+<style>
+  .container {
+    padding: 0 10px;
+  }
+
+  .category-container {
+    margin: 1rem 0;
+    display: flex;
+    font-size: .8rem;
+  }
+
+  .category {
+    padding: 3px .5em;
+  }
+
+  .category-selected {
+    background: #99CCFF;
+    background-clip: padding-box;
+  }
+
+  .recycle-bin {
+    margin-left: auto;
+  }
+
+  .recycle-bin-icon {
+    width: 1em;
+    height: 1em;
+    vertical-align: -0.1em;
+  }
+
+  .new-todo-container {
+    margin: 1.2em 0;
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+    padding: .8em 0;
+    text-align: center;
+  }
+
+  .new-todo-placeholder {
+    color: #999;
+  }
+
+  .todo-list {
+    font-size: .9rem;
+    margin-top: 1em;
+  }
+
+  .todo-item {
+    display: flex;
+    align-items: center;
+    background: white;
+    padding: 1em .7em;
+  }
+
+  .todo-status {
+    border: 1px solid #eee;
+  }
+
+  .todo-head {
+    padding-left: .5em;
+  }
+
+  .todo-delete {
+    margin-left: auto;
+  }
+
+</style>
+
+<template>
+  <view class="container">
+    <view class="category-container">
+      <view class="category category-selected">待办(10)</view>
+      <view class="category">完成(5)</view>
+      <view class="category">全部(15)</view>
+      <view class="category recycle-bin">
+        <image class="recycle-bin-icon" src="../imgs/recycle-bin-32.png"></image>
+        回收站(1)
+      </view>
+    </view>
+    <view class="new-todo-container">
+      <input type="text" placeholder="新的待办事项" placeholder-class="new-todo-placeholder">
+    </view>
+    <view class="todo-list">
+      <view class="todo-item">
+        <icon class="todo-status" size="16" type="success_no_circle"></icon>
+        <view class="todo-head">静态页面示例</view>
+        <icon class="todo-delete" size="18" type="clear"></icon>
+      </view>
+    </view>
+  </view>
+</template>
+
+<script>
+export default class extends wepy.app {
+
+}
+</script>
+
+

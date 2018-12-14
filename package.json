@@ -17,8 +17,9 @@
   "author": "liuqian26 <liuqian26@baidu.com>",
   "license": "MIT",
   "dependencies": {
-    "wepy": "^1.6.0",
+    "wepy": "^1.7.2",
     "wepy-async-function": "^1.4.4",
+    "wepy-baidu": "^1.7.2-alpha3",
     "wepy-com-toast": "^1.0.2"
   },
   "devDependencies": {
