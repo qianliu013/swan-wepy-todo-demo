@@ -1,0 +1,59 @@
+<style>
+  .category-container {
+    margin: 1rem 0;
+    display: flex;
+    font-size: .8rem;
+  }
+
+  .category {
+    padding: 3px .5em;
+  }
+
+  .category-selected {
+    background: #99CCFF;
+    background-clip: padding-box;
+  }
+
+  .recycle-bin {
+    margin-left: auto;
+  }
+
+  .recycle-bin-icon {
+    width: 1em;
+    height: 1em;
+    vertical-align: -0.1em;
+  }
+</style>
+
+<template>
+  <view class="category-container">
+    <view class="category {{currentTab === 'uncomplete' && 'category-selected'}}">待办({{uncompleteTodos}})</view>
+    <view class="category">完成({{completeTodos}})</view>
+    <view class="category">全部({{uncompleteTodos + completeTodos}})</view>
+    <view class="category recycle-bin">
+      <image class="recycle-bin-icon" src="../imgs/recycle-bin-32.png"></image>
+      回收站({{deletedTodos}})
+    </view>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+
+  export default class Category extends wepy.component {
+    props = {
+      uncompleteTodos:
+      {
+        type: Number,
+        default: 10
+      },
+      completeTodos: Number,
+      deletedTodos: Number,
+      currentTab: {
+       type: String,
+       twoWay: true
+      }
+    }
+  }
+</script>
+

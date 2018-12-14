@@ -1,0 +1,40 @@
+<style>
+  .todo-list {
+    font-size: .9rem;
+    margin-top: 1em;
+  }
+  .todo-item {
+    display: flex;
+    align-items: center;
+    background: white;
+    padding: 1em .7em;
+  }
+  .todo-status {
+    border: 1px solid #eee;
+  }
+  .todo-head {
+    padding-left: .5em;
+  }
+  .todo-delete {
+    margin-left: auto;
+  }
+</style>
+
+<template>
+  <view class="todo-list">
+    <view class="todo-item">
+      <icon class="todo-status" size="16" type="success_no_circle"></icon>
+      <view class="todo-head">静态页面示例</view>
+      <icon class="todo-delete" size="18" type="clear"></icon>
+    </view>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+
+  export default class extends wepy.component {
+  }
+</script>
+
+
