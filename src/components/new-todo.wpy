@@ -15,13 +15,29 @@
 
 <template>
   <view class="new-todo-container">
-    <input type="text" placeholder="新的待办事项" placeholder-class="new-todo-placeholder">
+    <input type="text" value="{{inputStr}}" @input="onInput" @confirm="addTodo" placeholder="新的待办事项" placeholder-class="new-todo-placeholder">
   </view>
 </template>
 
 <script>
   import wepy from 'wepy'
   export default class Category extends wepy.component {
+    data = {
+      inputStr: ''
+    }
+
+    methods = {
+      onInput({detail: {value: input}}) {
+        this.inputStr = input
+      },
+      addTodo() {
+        const newTodo = this.inputStr.trim()
+        if(newTodo) {
+          this.$emit('new-todo', newTodo)
+          this.inputStr = ''
+        }
+      }
+    }
   }
 </script>
 

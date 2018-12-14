@@ -14,11 +14,11 @@
     background-clip: padding-box;
   }
 
-  .recycle-bin {
+  .trash {
     margin-left: auto;
   }
 
-  .recycle-bin-icon {
+  .trash-icon {
     width: 1em;
     height: 1em;
     vertical-align: -0.1em;
@@ -27,11 +27,25 @@
 
 <template>
   <view class="category-container">
-    <view class="category {{currentTab === 'uncomplete' && 'category-selected'}}">待办({{uncompleteTodos}})</view>
-    <view class="category">完成({{completeTodos}})</view>
-    <view class="category">全部({{uncompleteTodos + completeTodos}})</view>
-    <view class="category recycle-bin">
-      <image class="recycle-bin-icon" src="../imgs/recycle-bin-32.png"></image>
+    <view
+      @tap="switch('uncomplete')"
+      class="category {{currentTab === 'uncomplete' && 'category-selected'}}">
+      待办({{uncompleteTodos}})
+    </view>
+    <view
+       @tap="switch('complete')"
+       class="category {{currentTab === 'complete' && 'category-selected'}}">
+      完成({{completeTodos}})
+    </view>
+    <view
+      @tap="switch('all')"
+      class="category {{currentTab === 'all' && 'category-selected'}}">
+      全部({{uncompleteTodos + completeTodos}})
+    </view>
+    <view
+      @tap="switch('trash')"
+      class="category trash {{currentTab === 'trash' && 'category-selected'}}">
+      <image class="trash-icon" src="../imgs/trash-32.png" />
       回收站({{deletedTodos}})
     </view>
   </view>
@@ -52,6 +66,14 @@
       currentTab: {
        type: String,
        twoWay: true
+      }
+    }
+
+    methods = {
+      switch(tab) {
+        if(tab !== this.currentTab) {
+          this.currentTab = tab
+        }
       }
     }
   }

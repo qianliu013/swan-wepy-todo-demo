@@ -7,9 +7,9 @@
 <template>
   <view class="container">
     <category
-      :uncompleteTodos="uncompleteTodos"
-      :completeTodos="completeTodos"
-      :deletedTodos="deletedTodos"
+      :uncompleteTodos.sync="uncompleteTodos"
+      :completeTodos.sync="completeTodos"
+      :deletedTodos.sync="deletedTodos"
       :currentTab="currentTab">
     </category>
     <newTodo></newTodo>
@@ -23,6 +23,15 @@
   import NewTodo from '../components/new-todo'
   import TodoList from '../components/todo-list'
 
+  /**
+   * 现在的问题：
+   * TODO 列表的增删改 放在哪里合适
+   *    增加：在 new-todo 中发起
+   *    大更新：category 中发起
+   *    小更新：列表中进行
+   * TODO 列表更新完成后如何通知视图更新
+  */
+
   export default class extends wepy.page {
     data = {
       completeTodos: 10,
@@ -34,6 +43,18 @@
       category: Catetory,
       newTodo: NewTodo,
       todoList: TodoList
+    }
+    events = {
+      'new-todo': detail => {
+        console.warn('add new todo', detail)
+        // 增加新的 TODO 项
+      }
+    }
+    watch = {
+      currentTab: newValue => {
+        console.warn(newValue, this.currentTab);
+        // 过滤 TODO 列表
+      }
     }
   }
 </script>
