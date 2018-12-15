@@ -1,43 +1,49 @@
 <style>
-  .new-todo-container {
-    margin: 1.2em 0;
-    border-top: 1px solid #eee;
-    border-bottom: 1px solid #eee;
-    padding: .8em 0;
-    text-align: center;
-  }
+.new-todo-container {
+  margin: 1.2em 0;
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+  padding: 0.8em 0;
+  text-align: center;
+}
 
-  .new-todo-placeholder {
-    color: #999;
-  }
+.new-todo-placeholder {
+  color: #999;
+}
 </style>
 
 
 <template>
   <view class="new-todo-container">
-    <input type="text" value="{{inputStr}}" @input="onInput" @confirm="addTodo" placeholder="新的待办事项" placeholder-class="new-todo-placeholder">
+    <input
+      type="text"
+      value="{{inputStr}}"
+      @input="onInput"
+      @confirm="addTodo"
+      placeholder="新的待办事项"
+      placeholder-class="new-todo-placeholder"
+    >
   </view>
 </template>
 
 <script>
-  import wepy from 'wepy'
-  export default class Category extends wepy.component {
-    data = {
-      inputStr: ''
-    }
+import wepy from 'wepy'
+export default class Category extends wepy.component {
+  data = {
+    inputStr: ''
+  }
 
-    methods = {
-      onInput({detail: {value: input}}) {
-        this.inputStr = input
-      },
-      addTodo() {
-        const newTodo = this.inputStr.trim()
-        if(newTodo) {
-          this.$emit('new-todo', newTodo)
-          this.inputStr = ''
-        }
+  methods = {
+    onInput({ detail: { value: input } }) {
+      this.inputStr = input
+    },
+    addTodo() {
+      const newTodo = this.inputStr.trim()
+      if (newTodo) {
+        this.$emit('new', newTodo)
+        this.inputStr = ''
       }
     }
   }
+}
 </script>
-

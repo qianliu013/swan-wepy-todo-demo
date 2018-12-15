@@ -18,8 +18,10 @@ body {
 </style>
 
 <script>
+
 import wepy from 'wepy'
 import 'wepy-async-function'
+import { recoverFromStorage } from './lib/todoStorageManager.js'
 
 
 export default class extends wepy.app {
@@ -41,11 +43,12 @@ export default class extends wepy.app {
 
   constructor () {
     super()
-    this.use('requestfix')
+    this.use('promisify')
   }
 
   onLaunch() {
     this.testAsync()
+    recoverFromStorage()
   }
 
   sleep (s) {

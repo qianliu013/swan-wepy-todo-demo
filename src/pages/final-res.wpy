@@ -1,7 +1,7 @@
 <style>
-  .container {
-    padding: 0 10px;
-  }
+.container {
+  padding: 0 10px;
+}
 </style>
 
 <template>
@@ -9,54 +9,73 @@
     <category
       :uncompleteTodos.sync="uncompleteTodos"
       :completeTodos.sync="completeTodos"
-      :deletedTodos.sync="deletedTodos"
-      :currentTab="currentTab">
-    </category>
+      :removedTodos.sync="removedTodos"
+      :currentTab="currentTab"
+    ></category>
     <newTodo></newTodo>
-    <todoList></todoList>
+    <todoList :todoList.sync="shownTodoList"></todoList>
   </view>
 </template>
 
 <script>
-  import wepy from 'wepy'
-  import Catetory from '../components/category'
-  import NewTodo from '../components/new-todo'
-  import TodoList from '../components/todo-list'
+import wepy from 'wepy'
 
-  /**
-   * 现在的问题：
-   * TODO 列表的增删改 放在哪里合适
-   *    增加：在 new-todo 中发起
-   *    大更新：category 中发起
-   *    小更新：列表中进行
-   * TODO 列表更新完成后如何通知视图更新
-  */
+import Catetory from '../components/category'
+import NewTodo from '../components/new-todo'
+import TodoList from '../components/todo-list'
 
-  export default class extends wepy.page {
-    data = {
-      completeTodos: 10,
-      uncompleteTodos: 20,
-      deletedTodos: 10,
-      currentTab: 'uncomplete',
-    }
-    components = {
-      category: Catetory,
-      newTodo: NewTodo,
-      todoList: TodoList
-    }
-    events = {
-      'new-todo': detail => {
-        console.warn('add new todo', detail)
-        // 增加新的 TODO 项
-      }
-    }
-    watch = {
-      currentTab: newValue => {
-        console.warn(newValue, this.currentTab);
-        // 过滤 TODO 列表
-      }
+import * as todoOp from '../lib/todo'
+import * as todoManager from '../lib/todoStorageManager'
+
+const isNormal = todo => !todo.removed && !todo.removedCompletely
+const tabToFilter = {
+  complete: todo => isNormal(todo) && todo.complete,
+  uncomplete: todo => isNormal(todo) && !todo.complete,
+  all: isNormal,
+  trash: todo => todo.removed && !todo.removedCompletely
+}
+export default class extends wepy.page {
+  components = {
+    category: Catetory,
+    newTodo: NewTodo,
+    todoList: TodoList
+  }
+
+  data = {
+    currentTab: 'all',
+    todoList: []
+  }
+
+  async onLoad() {
+    this.todoList = await todoManager.recoverFromStorage()
+  }
+
+  // TODO: 补充注释
+  wrapTodoManagerOp(func) {
+    return (...args) => {
+      func(this.todoList, ...args)
+      todoManager.writeToStorage(this.todoList)
     }
   }
+
+  events = {
+    // new 是异步的是因为新 todo 的 id 是异步获取的
+    new: async detail => {
+      const newTodo = await todoManager.newTodo(detail)
+      this.wrapTodoManagerOp(todoManager.addNewTodo)(newTodo)
+      this.$apply()
+    },
+    complete: this.wrapTodoManagerOp(todoManager.completeTodo),
+    uncomplete: this.wrapTodoManagerOp(todoManager.uncompleteTodo),
+    remove: this.wrapTodoManagerOp(todoManager.removeTodo),
+    recover: this.wrapTodoManagerOp(todoManager.recoverTodo)
+  }
+
+  computed = {
+    completeTodos: () => this.todoList.filter(tabToFilter.complete).length,
+    uncompleteTodos: () => this.todoList.filter(tabToFilter.uncomplete).length,
+    removedTodos: () => this.todoList.filter(tabToFilter.trash).length,
+    shownTodoList: () => this.todoList.filter(tabToFilter[this.currentTab])
+  }
+}
 </script>
-
-

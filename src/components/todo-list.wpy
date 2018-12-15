@@ -9,24 +9,38 @@
     background: white;
     padding: 1em .7em;
   }
-  .todo-status {
+  .todo-icon-container {
     border: 1px solid #eee;
+    width: 15px;
+    height: 15px;
   }
-  .todo-head {
+  .todo-detail {
     padding-left: .5em;
   }
-  .todo-delete {
+  .todo-complete {
+    text-decoration: line-through;
+    color: #999;
+  }
+  .todo-remove {
     margin-left: auto;
   }
 </style>
 
 <template>
   <view class="todo-list">
-    <view class="todo-item">
-      <icon class="todo-status" size="16" type="success_no_circle"></icon>
-      <view class="todo-head">静态页面示例</view>
-      <icon class="todo-delete" size="18" type="clear"></icon>
-    </view>
+    <!-- 这里不用 repeat 是因为当前 wepy（1.7.2） 编译 repeat 有点问题 -->
+    <block s-for="{{todoList}}" s-for-item="todo" s-for-key="id">
+      <!-- 这里不需要做较多的判断，是因为传进来的数组保证了部分情况不存在 -->
+      <view class="todo-item">
+        <view class="todo-icon-container" @tap="toggleComplete({{todo.id}}, {{todo.complete}})">
+          <icon s-if="{{todo.complete}}" size="16" type="success_no_circle"></icon>
+        </view>
+        <view class="{{todo.complete ? 'todo-detail todo-complete' : 'todo-detail'}}">{{todo.detail}}</view>
+        <icon s-if="{{!todo.removed}}" @tap="remove({{todo.id}})" class="todo-remove" size="18" type="clear"></icon>
+        <icon s-if="{{todo.removed}}" @tap="recover({{todo.id}})" class="todo-remove" size="18" type="top"></icon>
+        <icon s-if="{{todo.removed}}" @tap="recover({{todo.id}})" class="todo-remove" size="18" type="close"></icon>
+      </view>
+    </block>
   </view>
 </template>
 
@@ -34,6 +48,21 @@
   import wepy from 'wepy'
 
   export default class extends wepy.component {
+    props = {
+      todoList: Array
+    }
+
+    methods = {
+      toggleComplete(id, complete) {
+        this.$emit(complete ? 'uncomplete': 'complete', id)
+      },
+      remove(id) {
+        this.$emit('remove', id)
+      },
+      recover(id){
+        this.$emit('recover', id)
+      }
+    }
   }
 </script>
 

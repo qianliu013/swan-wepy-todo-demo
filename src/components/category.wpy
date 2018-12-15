@@ -28,6 +28,11 @@
 <template>
   <view class="category-container">
     <view
+      @tap="switch('all')"
+      class="category {{currentTab === 'all' && 'category-selected'}}">
+      全部({{uncompleteTodos + completeTodos}})
+    </view>
+    <view
       @tap="switch('uncomplete')"
       class="category {{currentTab === 'uncomplete' && 'category-selected'}}">
       待办({{uncompleteTodos}})
@@ -38,15 +43,10 @@
       完成({{completeTodos}})
     </view>
     <view
-      @tap="switch('all')"
-      class="category {{currentTab === 'all' && 'category-selected'}}">
-      全部({{uncompleteTodos + completeTodos}})
-    </view>
-    <view
       @tap="switch('trash')"
       class="category trash {{currentTab === 'trash' && 'category-selected'}}">
       <image class="trash-icon" src="../imgs/trash-32.png" />
-      回收站({{deletedTodos}})
+      回收站({{removedTodos}})
     </view>
   </view>
 </template>
@@ -56,13 +56,9 @@
 
   export default class Category extends wepy.component {
     props = {
-      uncompleteTodos:
-      {
-        type: Number,
-        default: 10
-      },
+      uncompleteTodos: Number,
       completeTodos: Number,
-      deletedTodos: Number,
+      removedTodos: Number,
       currentTab: {
        type: String,
        twoWay: true
