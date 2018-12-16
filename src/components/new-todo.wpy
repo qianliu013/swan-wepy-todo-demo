@@ -18,11 +18,12 @@
     <input
       type="text"
       value="{{inputStr}}"
+      maxlength="15"
       @input="onInput"
       @confirm="addTodo"
       placeholder="新的待办事项"
       placeholder-class="new-todo-placeholder"
-    >
+    />
   </view>
 </template>
 

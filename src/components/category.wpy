@@ -1,77 +1,68 @@
 <style>
-  .category-container {
-    margin: 1rem 0;
-    display: flex;
-    font-size: .8rem;
-  }
-
-  .category {
-    padding: 3px .5em;
-  }
-
-  .category-selected {
-    background: #99CCFF;
-    background-clip: padding-box;
-  }
-
-  .trash {
-    margin-left: auto;
-  }
-
-  .trash-icon {
-    width: 1em;
-    height: 1em;
-    vertical-align: -0.1em;
-  }
+.category-container {
+  margin: 1rem 0;
+  display: flex;
+  font-size: 0.8rem;
+}
+.category {
+  padding: 3px 0.5em;
+}
+.category-selected {
+  background: #99ccff;
+  background-clip: padding-box;
+}
+.trash {
+  margin-left: auto;
+}
+.trash-icon {
+  width: 1em;
+  height: 1em;
+  vertical-align: -0.1em;
+}
 </style>
 
 <template>
   <view class="category-container">
     <view
       @tap="switch('all')"
-      class="category {{currentTab === 'all' && 'category-selected'}}">
-      全部({{uncompleteTodos + completeTodos}})
-    </view>
+      class="category {{currentTab === 'all' && 'category-selected'}}"
+    >全部({{uncompleteTodos + completeTodos}})</view>
     <view
       @tap="switch('uncomplete')"
-      class="category {{currentTab === 'uncomplete' && 'category-selected'}}">
-      待办({{uncompleteTodos}})
-    </view>
+      class="category {{currentTab === 'uncomplete' && 'category-selected'}}"
+    >待办({{uncompleteTodos}})</view>
     <view
-       @tap="switch('complete')"
-       class="category {{currentTab === 'complete' && 'category-selected'}}">
-      完成({{completeTodos}})
-    </view>
+      @tap="switch('complete')"
+      class="category {{currentTab === 'complete' && 'category-selected'}}"
+    >完成({{completeTodos}})</view>
     <view
       @tap="switch('trash')"
-      class="category trash {{currentTab === 'trash' && 'category-selected'}}">
-      <image class="trash-icon" src="../imgs/trash-32.png" />
+      class="category trash {{currentTab === 'trash' && 'category-selected'}}"
+    >
+      <image class="trash-icon" src="../imgs/trash.png"></image>
       回收站({{removedTodos}})
     </view>
   </view>
 </template>
 
 <script>
-  import wepy from 'wepy'
+import wepy from 'wepy'
 
-  export default class Category extends wepy.component {
-    props = {
-      uncompleteTodos: Number,
-      completeTodos: Number,
-      removedTodos: Number,
-      currentTab: {
-       type: String,
-       twoWay: true
-      }
-    }
-
-    methods = {
-      switch(tab) {
-        if(tab !== this.currentTab) {
-          this.currentTab = tab
-        }
-      }
+export default class Category extends wepy.component {
+  props = {
+    uncompleteTodos: Number,
+    completeTodos: Number,
+    removedTodos: Number,
+    currentTab: {
+      type: String,
+      twoWay: true
     }
   }
-</script>
 
+  methods = {
+    switch(tab) {
+      this.currentTab = tab
+    }
+  }
+}
+</script>

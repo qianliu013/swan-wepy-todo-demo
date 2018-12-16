@@ -22,7 +22,9 @@ export async function recoverFromStorage() {
   num = +num
   id = isNaN(num) ? 0 : num
   try {
-    return JSON.parse(listStr)
+    const todoList = JSON.parse(listStr)
+    todoList.sort((todo1, todo2) => todo2.createTime - todo1.createTime)
+    return todoList
   } catch (_) {
     return []
   }
@@ -45,23 +47,21 @@ export async function newTodo(detail) {
 }
 
 export function addNewTodo(todoList, newTodo) {
-  todoList.push(newTodo)
+  todoList.unshift(newTodo)
 }
 
 function todoProxy(func) {
   return function(todoList, id) {
-    console.warn(todoList, id, func)
     const i = todoList.findIndex(todo => todo.id === id)
     if (i === -1) return
     const todo = todoList[i]
     func(todo)
-    console.warn(todo)
     return todoList.splice(i, 1, todo)
   }
 }
 
-export const completeTodo = todoProxy(todo.complete)
-export const uncompleteTodo = todoProxy(todo.uncomplete)
-export const removeTodo = todoProxy(todo.remove)
-export const recoverTodo = todoProxy(todo.recovery)
-export const removeCompletelyTodo = todoProxy(todo.removeCompletely)
+export const complete = todoProxy(todo.complete)
+export const uncomplete = todoProxy(todo.uncomplete)
+export const remove = todoProxy(todo.remove)
+export const recover = todoProxy(todo.recover)
+export const removeCompletely = todoProxy(todo.removeCompletely)

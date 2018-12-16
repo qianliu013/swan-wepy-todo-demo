@@ -24,7 +24,6 @@ import Catetory from '../components/category'
 import NewTodo from '../components/new-todo'
 import TodoList from '../components/todo-list'
 
-import * as todoOp from '../lib/todo'
 import * as todoManager from '../lib/todoStorageManager'
 
 const isNormal = todo => !todo.removed && !todo.removedCompletely
@@ -50,7 +49,6 @@ export default class extends wepy.page {
     this.todoList = await todoManager.recoverFromStorage()
   }
 
-  // TODO: 补充注释
   wrapTodoManagerOp(func) {
     return (...args) => {
       func(this.todoList, ...args)
@@ -65,10 +63,11 @@ export default class extends wepy.page {
       this.wrapTodoManagerOp(todoManager.addNewTodo)(newTodo)
       this.$apply()
     },
-    complete: this.wrapTodoManagerOp(todoManager.completeTodo),
-    uncomplete: this.wrapTodoManagerOp(todoManager.uncompleteTodo),
-    remove: this.wrapTodoManagerOp(todoManager.removeTodo),
-    recover: this.wrapTodoManagerOp(todoManager.recoverTodo)
+    complete: this.wrapTodoManagerOp(todoManager.complete),
+    uncomplete: this.wrapTodoManagerOp(todoManager.uncomplete),
+    remove: this.wrapTodoManagerOp(todoManager.remove),
+    recover: this.wrapTodoManagerOp(todoManager.recover),
+    removeCompletely: this.wrapTodoManagerOp(todoManager.removeCompletely)
   }
 
   computed = {
