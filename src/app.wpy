@@ -30,5 +30,13 @@ export default class extends wepy.app {
   onLaunch() {
     recoverFromStorage()
   }
+  async getUserInfo() {
+    try {
+      await wepy.checkSession()
+    } catch (e) {
+      await wepy.login()
+    }
+    return (await wepy.getUserInfo()).userInfo
+  }
 }
 </script>

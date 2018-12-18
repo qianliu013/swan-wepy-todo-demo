@@ -2,10 +2,30 @@
 .container {
   padding: 0 10px;
 }
+.userinfo {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.userinfo-avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+}
+.userinfo-nickname {
+  margin-top: 5px;
+  color: #aaa;
+  font-size: 0.7rem;
+}
 </style>
 
 <template>
   <view class="container">
+    <view class="userinfo">
+      <image class="userinfo-avatar" src="{{ userInfo.avatarUrl }}" background-size="cover"></image>
+      <view class="userinfo-nickname">{{ userInfo.nickName }}</view>
+    </view>
     <category
       :uncompleteTodos.sync="uncompleteTodos"
       :completeTodos.sync="completeTodos"
@@ -42,11 +62,21 @@ export default class extends wepy.page {
 
   data = {
     currentTab: 'all',
-    todoList: []
+    todoList: [],
+    userInfo: {
+      nickName: '百度小程序用户',
+      avatarUrl: 'https://b.bdstatic.com/miniapp/resource/image/headImg.png'
+    }
   }
 
   async onLoad() {
     this.todoList = await todoManager.recoverFromStorage()
+    try {
+      this.userInfo = await this.$parent.getUserInfo()
+    } catch (e) {
+      console.error('获取用户信息失败', e)
+    }
+    this.$apply()
   }
 
   wrapTodoManagerOp(func) {

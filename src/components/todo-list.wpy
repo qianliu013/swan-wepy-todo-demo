@@ -34,7 +34,7 @@
   height: 1.2em;
 }
 .remove-completely {
-  color: red;
+  color: #B33A3A;
   padding-left: 3px;
 }
 </style>
@@ -42,6 +42,8 @@
 <template>
   <view class="todo-list">
     <!-- HACK: 这里不用 repeat 是因为当前 wepy（1.7.2） 编译 repeat 有点问题 -->
+    <!-- <repeat for="{{todoList}}" key="key" item="todo"> -->
+    <!-- <block wx:for="{{todoList}}" wx:for-item="todo" wx:key="id"> -->
     <block s-for="{{todoList}}" s-for-item="todo" s-for-key="id">
       <!-- 这里不需要做较多的判断，是因为传进来的数组保证了部分情况不存在 -->
       <view class="todo-item">
@@ -70,6 +72,7 @@
         </view>
       </view>
     </block>
+    <!-- </repeat> -->
   </view>
 </template>
 

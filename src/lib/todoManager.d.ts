@@ -13,7 +13,7 @@ export function recoverFromStorage(): Promise<Todo[]>
  * @param todoList - 被写入的 TodoList
  * @returns resolve 结果为调用 swan.setStorage 返回值的 Promise
  */
-export function writeToStorage(todoList: Todo[]): Promise<Array[Object]>
+export function writeToStorage(todoList: Todo[]): Promise<object[]>
 
 /**
  * 返回一个新的 Todo；由于 id 是异步获取的，因此此函数是异步的

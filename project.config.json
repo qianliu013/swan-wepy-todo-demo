@@ -4,10 +4,12 @@
     "urlCheck": true,
     "es6": false,
     "postcss": false,
-    "minified": false
+    "minified": false,
+    "newFeature": true
   },
   "compileType": "miniprogram",
   "appid": "touristappid",
   "projectname": "baidu-wepy-quickstart",
-  "miniprogramRoot": "./dist"
+  "miniprogramRoot": "dist/",
+  "condition": {}
 }
