@@ -1,13 +1,14 @@
-# WePY 开发百度小程序 Demo
+# WePY 百度小程序 Todo Demo
 
 一个简易的待办事项 Demo
 
 ![页面](imgs/swan-demo.gif)
 
-## 运行
+## 依赖 && 运行
 
 ```shell
-npm i
+npm i -g wepy-cli@1.7.3-alpha5
+npm i # 所依赖的包版本参考 package.json
 wepy build -o baidu -w # -w 表示监听文件修改
 ```
 
