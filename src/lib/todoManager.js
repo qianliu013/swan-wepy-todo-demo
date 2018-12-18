@@ -10,31 +10,24 @@ let loadLocalStorage = null
 export async function recoverFromStorage() {
   if (loadLocalStorage) return loadLocalStorage
   let [num, listStr] = await Promise.all([
-    wepy
-      .getStorage({ key: KEY_ID })
-      .then(({ data }) => data)
-      .catch(() => ''),
-    wepy
-      .getStorage({ key: KEY_TODO_LIST })
-      .then(({ data }) => data)
-      .catch(() => '')
-  ])
+    wepy.getStorage({ key: KEY_ID }).then(({ data }) => data),
+    wepy.getStorage({ key: KEY_TODO_LIST }).then(({ data }) => data)
+  ]).catch(_ => ['0', '[]'])
   num = +num
   id = isNaN(num) ? 0 : num
   try {
     const todoList = JSON.parse(listStr)
     todoList.sort((todo1, todo2) => todo2.createTime - todo1.createTime)
     return todoList
-  } catch (_) {
+  } catch (e) {
+    console.debug(e)
     return []
   }
 }
 
-export function writeToStorage(todoList) {
-  return Promise.all([
-    wepy.setStorage({ key: KEY_ID, data: id }),
-    wepy.setStorage({ key: KEY_TODO_LIST, data: JSON.stringify(todoList) })
-  ])
+export async function writeToStorage(todoList) {
+  wepy.setStorage({ key: KEY_ID, data: id })
+  return wepy.setStorage({ key: KEY_TODO_LIST, data: JSON.stringify(todoList) })
 }
 
 async function generateId() {
@@ -56,7 +49,7 @@ function todoProxy(func) {
     if (i === -1) return
     const todo = todoList[i]
     func(todo)
-    return todoList.splice(i, 1, todo)
+    todoList.splice(i, 1, todo)
   }
 }
 

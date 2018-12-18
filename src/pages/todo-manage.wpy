@@ -24,7 +24,7 @@ import Catetory from '../components/category'
 import NewTodo from '../components/new-todo'
 import TodoList from '../components/todo-list'
 
-import * as todoManager from '../lib/todoStorageManager'
+import * as todoManager from '../lib/todoManager'
 
 const isNormal = todo => !todo.removed && !todo.removedCompletely
 const tabToFilter = {
@@ -52,7 +52,7 @@ export default class extends wepy.page {
   wrapTodoManagerOp(func) {
     return (...args) => {
       func(this.todoList, ...args)
-      todoManager.writeToStorage(this.todoList)
+      todoManager.writeToStorage(this.todoList).then(console.debug)
     }
   }
 

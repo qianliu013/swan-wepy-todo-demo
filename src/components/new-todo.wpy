@@ -6,19 +6,17 @@
   padding: 0.8em 0;
   text-align: center;
 }
-
 .new-todo-placeholder {
   color: #999;
 }
 </style>
-
 
 <template>
   <view class="new-todo-container">
     <input
       type="text"
       value="{{inputStr}}"
-      maxlength="15"
+      maxlength="130"
       @input="onInput"
       @confirm="addTodo"
       placeholder="新的待办事项"
@@ -33,7 +31,6 @@ export default class Category extends wepy.component {
   data = {
     inputStr: ''
   }
-
   methods = {
     onInput({ detail: { value: input } }) {
       this.inputStr = input

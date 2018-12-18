@@ -13,6 +13,7 @@
   border: 1px solid #eee;
   width: 15px;
   height: 15px;
+  flex: 0 0 auto;
 }
 .todo-complete {
   text-decoration: line-through;
@@ -20,9 +21,13 @@
 }
 .todo-detail {
   padding-left: 0.5em;
+  flex: 1 1 auto;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .todo-manage {
-  margin-left: auto;
+  flex: 0 0 auto;
 }
 .recover-icon {
   width: 1.2em;
@@ -36,7 +41,7 @@
 
 <template>
   <view class="todo-list">
-    <!-- 这里不用 repeat 是因为当前 wepy（1.7.2） 编译 repeat 有点问题 -->
+    <!-- HACK: 这里不用 repeat 是因为当前 wepy（1.7.2） 编译 repeat 有点问题 -->
     <block s-for="{{todoList}}" s-for-item="todo" s-for-key="id">
       <!-- 这里不需要做较多的判断，是因为传进来的数组保证了部分情况不存在 -->
       <view class="todo-item">
@@ -75,7 +80,6 @@ export default class extends wepy.component {
   props = {
     todoList: Array
   }
-
   methods = {
     toggleComplete(id, complete) {
       this.$emit(complete ? 'uncomplete' : 'complete', id)

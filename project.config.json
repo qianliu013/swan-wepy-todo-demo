@@ -7,7 +7,7 @@
     "minified": false
   },
   "compileType": "miniprogram",
-  "appid": "11290866",
+  "appid": "touristappid",
   "projectname": "baidu-wepy-quickstart",
   "miniprogramRoot": "./dist"
 }

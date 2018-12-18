@@ -11,7 +11,7 @@ body {
 <script>
 import wepy from 'wepy'
 import 'wepy-async-function'
-import { recoverFromStorage } from './lib/todoStorageManager.js'
+import { recoverFromStorage } from './lib/todoManager.js'
 
 export default class extends wepy.app {
   config = {
@@ -23,12 +23,10 @@ export default class extends wepy.app {
       navigationBarTextStyle: 'black'
     }
   }
-
   constructor() {
     super()
     this.use('promisify')
   }
-
   onLaunch() {
     recoverFromStorage()
   }
